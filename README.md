@@ -1,16 +1,9 @@
-# api_fetch_flutter
+# Flutter Cubit
 
-A new Flutter project.
+This repo demostrates a simple network request Cubit in action
 
-## Getting Started
+## Useful links
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Bloc library](https://bloclibrary.dev/#/gettingstarted?id=overview)
+- [Bloc dart package](https://pub.dev/packages/bloc)
+- [Streams in dart](https://dart.dev/tutorials/language/streams)
