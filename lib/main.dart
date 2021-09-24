@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:api_fetch_flutter/album.dart';
-import 'package:api_fetch_flutter/api.dart';
+import 'package:api_fetch_flutter/album_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: BlocProvider<AlbumCubit>(
+        create: (context) => AlbumCubit(),
+        child: const MyHomePage(),
+      ),
     );
   }
 }
@@ -31,25 +33,31 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    // change the param to -1 to see the error state
+    BlocProvider.of<AlbumCubit>(context).getAlbum('1');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('API test')),
       body: Center(
-        child: FutureBuilder<Album?>(
-          future: Api.getAlbum('-1'),
-          builder: (context, snap) {
-            if (snap.hasError) {
+        child: BlocBuilder<AlbumCubit, AlbumState>(
+          builder: (context, albumState) {
+            if (albumState.hasError) {
               return Text(
-                snap.error.toString(),
+                albumState.error.toString(),
                 style: const TextStyle(color: Colors.red),
               );
             }
 
-            if (snap.connectionState == ConnectionState.waiting) {
+            if (albumState.loading || albumState.data == null) {
               return const CircularProgressIndicator();
             }
 
-            Album album = snap.data!;
+            Album album = albumState.data!;
 
             return ListTile(
               title: Text('Title: ' + album.title),
