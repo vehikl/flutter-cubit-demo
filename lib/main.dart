@@ -30,9 +30,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _loading = false;
+  bool _loading = true;
   String _error = '';
   Album? _data;
+
+  @override
+  void initState() {
+    _makeRequest('1');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? const CircularProgressIndicator()
                 : _data == null
                     ? const Text('Nothing here yet...')
-                    : Text(_data!.title),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () => _makeRequest('1'),
-            child: const Icon(Icons.check),
-          ),
-          const SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: () => _makeRequest('-1'),
-            child: const Icon(Icons.close),
-          )
-        ],
+                    : ListTile(title: Text('Title: ' + _data!.title), tileColor: Colors.amber,),
       ),
     );
   }
